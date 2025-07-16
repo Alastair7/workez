@@ -1,0 +1,6 @@
+@WorkezAPI_HostAddress = http://localhost:5253
+
+GET {{WorkezAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
