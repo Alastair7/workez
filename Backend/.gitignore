@@ -149,46 +149,35 @@ publish/
 # Publish Web Output
 *.[Pp]ublish.xml
 *.azurePubxml
-# TODO: Comment the next line if you want to checkin your web deploy settings
-# but database connection strings (with potential passwords) will be unencrypted
 *.pubxml
 *.publishproj
 
-# Microsoft Azure Web App publish settings. Comment the next line if you want to
-# checkin your Azure Web App publish settings, but sensitive information contained
-# in these scripts will be unencrypted
+# Azure publish scripts
 PublishScripts/
 
 # NuGet Packages
 *.nupkg
-# The packages folder can be ignored because of Package Restore
 **/packages/*
-# except build/, which is used as an MSBuild target.
 !**/packages/build/
-# Uncomment if necessary however generally it will be regenerated when needed
-#!**/packages/repositories.config
-# NuGet v3's project.json files produces more ignoreable files
 *.nuget.props
 *.nuget.targets
 
-# Microsoft Azure Build Output
+# Azure build output
 csx/
 *.build.csdef
 
-# Microsoft Azure Emulator
+# Azure Emulator
 ecf/
 rcf/
 
-# Windows Store app package directories and files
+# Windows Store
 AppPackages/
 BundleArtifacts/
 Package.StoreAssociation.xml
 _pkginfo.txt
 
-# Visual Studio cache files
-# files ending in .cache can be ignored
+# VS cache files
 *.[Cc]ache
-# but keep track of directories ending in .cache
 !*.[Cc]ache/
 
 # Others
@@ -203,26 +192,23 @@ ClientBin/
 node_modules/
 orleans.codegen.cs
 
-# Since there are multiple workflows, uncomment next line to ignore bower_components
-# (https://github.com/github/gitignore/pull/1529#issuecomment-104372622)
+# Bower (optional)
 #bower_components/
 
-# RIA/Silverlight projects
+# RIA/Silverlight
 Generated_Code/
 
-# Backup & report files from converting an old project file
-# to a newer Visual Studio version. Backup files are not needed,
-# because we have git ;-)
+# VS upgrade logs
 _UpgradeReport_Files/
 Backup*/
 UpgradeLog*.XML
 UpgradeLog*.htm
 
-# SQL Server files
+# SQL Server
 *.mdf
 *.ldf
 
-# Business Intelligence projects
+# BI Projects
 *.rdl.data
 *.bim.layout
 *.bim_*.settings
@@ -230,32 +216,12 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 
-# GhostDoc plugin setting file
+# GhostDoc
 *.GhostDoc.xml
 
-# Node.js Tools for Visual Studio
-.ntvs_analysis.dat
-
-# Visual Studio 6 build log
-*.plg
-
-# Visual Studio 6 workspace options file
-*.opt
-
-# Visual Studio LightSwitch build output
-**/*.HTMLClient/GeneratedArtifacts
-**/*.DesktopClient/GeneratedArtifacts
-**/*.DesktopClient/ModelManifest.xml
-**/*.Server/GeneratedArtifacts
-**/*.Server/ModelManifest.xml
-_Pvt_Extensions
-
-# Paket dependency manager
-.paket/paket.exe
-paket-files/
-
-# FAKE - F# Make
-.fake/
+# Python Tools for Visual Studio (PTVS)
+__pycache__/
+*.pyc
 
 # JetBrains Rider
 .idea/
@@ -264,11 +230,72 @@ paket-files/
 # CodeRush
 .cr/
 
-# Python Tools for Visual Studio (PTVS)
-__pycache__/
-*.pyc
+# FAKE - F# Make
+.fake/
 
-# Cake - Uncomment if you are using it
+# Visual Studio 6
+*.plg
+*.opt
+
+# LightSwitch
+**/*.HTMLClient/GeneratedArtifacts
+**/*.DesktopClient/GeneratedArtifacts
+**/*.DesktopClient/ModelManifest.xml
+**/*.Server/GeneratedArtifacts
+**/*.Server/ModelManifest.xml
+_Pvt_Extensions
+
+# Paket
+.paket/paket.exe
+paket-files/
+
+# Cake (optional)
 # tools/
 
-# End of https://www.toptal.com/developers/gitignore/api/aspnetcore
+# End of default ASP.NET Core ignore rules
+
+##########################################################
+# 🧱 Custom Additions for Clean Architecture (WorkezAPI)
+##########################################################
+
+# Secrets and sensitive configurations
+**/appsettings.Development.json
+**/appsettings.Local.json
+**/appsettings.*.local.json
+**/secrets.json
+
+# Entity Framework Core
+Migrations/
+*.sqlite
+*.db
+*.bak
+
+# Unit test and coverage results
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+# Logs
+logs/
+*.log
+
+# VS Code settings
+.vscode/
+.history/
+
+# JetBrains Rider settings
+.idea/
+
+# Docker-related
+.dockerignore
+docker-compose.override.yml
+
+# System/OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+*.swp
+*.swo
