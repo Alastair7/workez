@@ -6,6 +6,7 @@ import './LandingPage.css'
 export const LandingPage = () => {
   const { loginWithRedirect } = useAuth0()
   const handleLogin = () => loginWithRedirect()
+
   return <>
     <div className='logo'>
       <img src={WorkezLogo} />
