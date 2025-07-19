@@ -1,15 +1,23 @@
-import { Auth0Provider } from '@auth0/auth0-react'
+import { Route, Routes } from 'react-router'
 import './App.css'
-import { BrowserRouter } from 'react-router'
-import { Router } from './features/router/Router'
+import { RouteGuard } from './features/router/RouteGuard'
+import { HomePage } from './pages/home/HomePage'
+import { CallbackPage } from './pages/general/CallbackPage'
+import { LandingPage } from './pages/landing/LandingPage'
+import { NotFoundPage } from './pages/general/NotFoundPage'
 
 function App() {
   return (
-    <Auth0Provider domain={import.meta.env.VITE_AUTH0_DOMAIN} clientId={import.meta.env.VITE_AUTH0_CLIENT_ID} authorizationParams={{ redirect_uri: "http://localhost:5173/home" }}>
-      <BrowserRouter>
-        <Router />
-      </BrowserRouter>
-    </Auth0Provider>
+    <Routes>
+      <Route path="/" element={
+        <RouteGuard>
+          <HomePage />
+        </RouteGuard>
+      } />
+      <Route path="callback" element={<CallbackPage />} />
+      <Route path="login" element={<LandingPage />} />
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   )
 }
 
