@@ -1,3 +1,26 @@
+:root {
+
+	/* General palette */
+	--workez-bg-color: #f7fdfa;
+
+	/* Workez Primary Colors: primary buttons, active elements, highlights... */
+	--workez-primary: #2C6140;
+	--workez-primary-dark: #2C6140;
+	--workez-primary-light: #33D17A;
+
+	/* Text related palette */
+	--workez-text-primary: #1F2937;
+	--workez-text-secondary: #6B7280;
+
+	/* Accent colors palette */
+	--workez-accent-red: #F87171;
+	--workez-accent-blue: #38BDF8;
+	--workez-accent-yellow: #FACC15;
+
+	/* Globals */
+	background-color: var(--workez-bg-color);
+}
+
 * {
 	margin: 0;
 	padding: 0;
