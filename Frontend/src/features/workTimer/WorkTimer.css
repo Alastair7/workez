@@ -1,0 +1,16 @@
+.work-timer {
+	display: flex;
+	flex-direction: column;
+	padding: 1rem;
+	align-items: center;
+}
+
+.work-timer--numbers {
+	font-size: 6em;
+	color: var(--workez-text-secondary);
+}
+
+.work-timer--buttons {
+	display: flex;
+	gap: 2rem;
+}
