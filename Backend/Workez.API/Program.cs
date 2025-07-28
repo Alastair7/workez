@@ -1,27 +1,58 @@
+
+using Microsoft.EntityFrameworkCore;
+using Workez.Infrastructure.Persistence;
+using Microsoft.OpenApi.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+var configuration = builder.Configuration;
+//  Configure Entity Framework Core with PostgreSQL
+var connectionString = $"Host={configuration["Database:Host"]};Port={configuration["Database:Port"]};Database={configuration["Database:Name"]};Username={configuration["Database:User"]};Password={configuration["Database:Password"]}";
+builder.Services.AddDbContext<PostgresContext>(options =>
+    options.UseNpgsql(connectionString));
+
+// Swagger/OpenAPI
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Workez API",
+        Version = "v1"
+    });
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Middleware de desarrollo
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
 
 var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
+app.MapGet("/healthCheck", async (PostgresContext db) =>
+{
+    try
+    {
+        await db.Database.CanConnectAsync();
+        return Results.Ok("Database connection is healthy.");
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem($"Database connection failed: {ex.Message}");
+    }
+});
+
 app.MapGet("/weatherforecast", () =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
+    var forecast = Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast
         (
             DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
