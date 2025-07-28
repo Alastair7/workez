@@ -20,4 +20,8 @@
 		background-color: seagreen;
 		color: whitesmoke;
 	}
+
+	&:disabled {
+		background-color: gray;
+	}
 }

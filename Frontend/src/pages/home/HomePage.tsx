@@ -7,7 +7,7 @@ export const HomePage = () => {
 
   const dayName = getDayName(today.toString(), "es-ES")
 
-  const date = `${dayName}, ${today.getDate()}-${today.getMonth()}-${today.getFullYear()}`
+  const date = `${dayName}, ${today.getDate()}/${today.getMonth()}/${today.getFullYear()}`
   return (
     <div className="homepage">
       <h1>Welcome! User</h1>

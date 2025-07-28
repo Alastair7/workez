@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router'
-import { LandingPage } from '../../pages/LandingPage'
 import { useAuth0 } from '@auth0/auth0-react'
-import { HomePage } from '../../pages/HomePage'
+import { HomePage } from '../../pages/home/HomePage'
+import { LandingPage } from '../../pages/landing/LandingPage'
 
 export const Router = () => {
   const { isAuthenticated } = useAuth0()
