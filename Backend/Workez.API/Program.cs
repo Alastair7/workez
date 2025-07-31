@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
 //  Configure Entity Framework Core with PostgreSQL
-var connectionString = $"Host={configuration["Database:Host"]};Port={configuration["Database:Port"]};Database={configuration["Database:Name"]};Username={configuration["Database:User"]};Password={configuration["Database:Password"]}";
+var connectionString = configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<PostgresContext>(options =>
     options.UseNpgsql(connectionString));
 
