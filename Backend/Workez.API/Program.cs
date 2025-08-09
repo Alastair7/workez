@@ -1,7 +1,9 @@
-
 using Microsoft.EntityFrameworkCore;
 using Workez.Infrastructure.Persistence;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,18 @@ var configuration = builder.Configuration;
 var connectionString = configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<PostgresContext>(options =>
     options.UseNpgsql(connectionString));
+// Register repositories
+builder.Services.AddScoped<Workez.Domain.Interfaces.IShiftRepository, Workez.Infrastructure.Repositories.ShiftRepository>();
+// Register application services
+builder.Services.AddScoped<Workez.Application.Services.ShiftService>();
+// Configure CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder => builder.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
 
 // Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
@@ -22,6 +36,26 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// Authentication config
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = configuration["Jwt:Issuer"],
+        ValidAudience = configuration["Jwt:Audience"]
+    };
+});
+
+builder.Services.AddAuthorization();
+builder.Services.AddControllers();
+builder.Services.AddScoped<Workez.Application.Services.ShiftService>();
+
+// Construye la app después de configurar los servicios
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -30,11 +64,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapGet("/healthCheck", async (PostgresContext db) =>
 {
@@ -48,24 +79,5 @@ app.MapGet("/healthCheck", async (PostgresContext db) =>
         return Results.Problem($"Database connection failed: {ex.Message}");
     }
 });
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
-
+app.MapControllers();
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
