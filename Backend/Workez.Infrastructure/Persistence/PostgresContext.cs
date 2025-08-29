@@ -13,9 +13,9 @@ public partial class PostgresContext : DbContext
         : base(options)
     {
     }
-    public virtual DbSet<Shift> Shifts { get; set; }
+    public virtual DbSet<ShiftEntity> Shifts { get; set; }
 
-    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<UserEntity> Users { get; set; }
 
 
 
@@ -44,7 +44,7 @@ public partial class PostgresContext : DbContext
 
 
 
-        modelBuilder.Entity<Shift>(entity =>
+        modelBuilder.Entity<ShiftEntity>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Shift_pkey");
 
@@ -61,7 +61,7 @@ public partial class PostgresContext : DbContext
 
 
 
-        modelBuilder.Entity<User>(entity =>
+        modelBuilder.Entity<UserEntity>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("User_pkey");
 

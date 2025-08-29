@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Workez.Infrastructure.Persistence;
 
 /// <summary>
 /// The Shift of a Journal
 /// </summary>
-public partial class Shift
+
+[Table("Shift")]
+public partial class ShiftEntity
 {
     public long Id { get; set; }
 

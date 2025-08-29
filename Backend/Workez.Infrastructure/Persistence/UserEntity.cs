@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Workez.Infrastructure.Persistence;
 
-public partial class User
+[Table("User")]
+public partial class UserEntity
 {
     public long Id { get; set; }
 

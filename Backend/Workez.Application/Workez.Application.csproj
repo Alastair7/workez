@@ -2,12 +2,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Workez.Domain\Workez.Domain.csproj" />
+
   </ItemGroup>
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <UserSecretsId>99bf1ff2-5de2-4f42-9391-f8a991e8f303</UserSecretsId>
   </PropertyGroup>
 
 </Project>
